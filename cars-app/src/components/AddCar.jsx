@@ -8,74 +8,68 @@ const AddCar = () =>{
     const [model, setModel] = useState();
     const [maxSpeed, setMaxSpeed] = useState();
     const [doors, setDoors] = useState();
-    const [automatic, setAutomatic] = useState();
+    const [automatic, setAutomatic] = useState(false);
     const [engine, setEngine] = useState();
     const [selectedYear, setSelectedYear] = useState('');
 
-    const [car, setCar] = useState({
-        brand: "",
-        model: "",
-        year: 0,
-        maxSpeed: 0,
-        isAutomatic: false,
-        engine: "",
-        numberOfDoors: 0,
-      });
+    const resetStates = () =>{
+        setBrand("")
+        setModel("")
+        setMaxSpeed(0)
+        setDoors(0)
+        setAutomatic(false)
+        setEngine("")
+        setSelectedYear(0);
+    }
+    
 
+   
     const handleYearChange = (e) => {
       setSelectedYear(e.target.value);
     };
     const submitHandler = (e) => {
         e.preventDefault();
-        setCar({
-            brand: brand,
-            model: model,
-            year: selectedYear,
-            maxSpeed: maxSpeed,
-            isAutomatic: automatic,
-            engine: engine,
-            numberOfDoors: doors,
-          });
-         
-        postCars(car);
-    
-        setCar({
-          brand: "",
-          model: "",
-          year: 0,
-          maxSpeed: 0,
-          isAutomatic: false,
-          engine: "",
-          numberOfDoors: 0,
-        });
+      
+        postCars(
+             brand,
+             model,
+           selectedYear,
+             maxSpeed,
+             automatic,
+             engine,
+             doors,
+          );
+          resetStates()
+            
+      
     };
 
     return(
         <Form className="w-50 " onSubmit={submitHandler}>
             <Form.Group className="mb-3">
                 <Form.Label>Brand </Form.Label>
-                <Form.Control id="brand" type="text" placeholder="Enter Brand" onChange={(e) => setBrand(e.target.value)}/>
+                <Form.Control id="brand" type="text" placeholder="Enter Brand" value={brand} onChange={(e) => setBrand(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Model </Form.Label>
-                <Form.Control id="mdoel" type="text" placeholder="Enter Model" onChange={(e) => setModel(e.target.value)}/>
+                <Form.Control id="model" type="text" placeholder="Enter Model"  value={model} onChange={(e) => setModel(e.target.value)}/>
             </Form.Group>
 
             <YearSelect handleYearChange={handleYearChange} selectedYear={selectedYear}></YearSelect>
 
             <Form.Group className="mb-3">
                 <Form.Label>Max Speed </Form.Label>
-                <Form.Control id="speed" type="number" placeholder="Enter Max Speed" onChange={(e) => setMaxSpeed(e.target.value)}/>
+                <Form.Control id="speed" type="number" placeholder="Enter Max Speed" value={maxSpeed} onChange={(e) => setMaxSpeed(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="mb-3">
                 <Form.Label>Number of dors</Form.Label>
-                <Form.Control id="speed" type="number" placeholder="Enter Number of dors" onChange={(e) => setDoors(e.target.value)}/>
+                <Form.Control id="speed" type="number" placeholder="Enter Number of dors" value={doors} onChange={(e) => setDoors(e.target.value)}/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Is Automatic</Form.Label>
-                <Form.Check id="speed" type="switch" label="Switch Automatic" onChange={(e) => setAutomatic(e.target.value)}/>
+                <Form.Check id="speed" type="switch" label="Switch Automatic" checked={automatic} onChange={(e) => setAutomatic(e.target.checked)}/>
             </Form.Group>
 
             <Form.Group className="mb-3">
